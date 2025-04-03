@@ -112,6 +112,7 @@ Simply build and run:
 ```bash
 docker build -t mamoart-indexer .
 docker run -p 3000:3000 mamoart-indexer
+```
 
 ---
 
