@@ -174,11 +174,11 @@ async function start() {
     res.json(snapshot);
     return;
   });
-
-  // 🚀 Start listening
-  app.listen(port, () => {
-    console.log(`🟢 Server running at http://localhost:${port}`);
-  });
 }
+
+// 🚀 Start listening
+app.listen(port, () => {
+  console.log(`🟢 Server running at http://localhost:${port}`);
+});
 
 start();
