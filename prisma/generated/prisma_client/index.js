@@ -146,6 +146,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-1.1.x"
       }
     ],
     "previewFeatures": [],
@@ -163,6 +167,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -171,8 +176,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/prisma_client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel OwnedNFT {\n  id        Int      @id @default(autoincrement()) // Auto-incremented primary key\n  owner     String // NFT owner address\n  contract  String // NFT contract address\n  tokenId   Int // Token ID\n  updatedAt DateTime @updatedAt // Automatically updated timestamp\n\n  @@unique([contract, tokenId]) // Unique constraint per NFT\n  @@index([owner]) // Index for owner field\n}\n\nmodel PaintGrids {\n  gridId     Int      @id // Grid ID (0-1499)\n  nftAddress String // NFT contract address\n  tokenId    Int // Token ID used in this grid\n  metadata   String // Cached metadata (JSON string)\n  painter    String // Address of the user who painted\n  block      Int // Block number of the paint tx\n  txHash     String // Transaction hash for this paint\n  paintedAt  DateTime @default(now()) // Timestamp of painting (initial set)\n\n  @@unique([txHash]) // Ensure each txHash is unique (one paint per tx)\n  @@index([painter]) // Index for painter field\n}\n",
-  "inlineSchemaHash": "66cad93c424fd40d1c21d9f096669d706acd5f60fa41f794e8e68a734625e0de",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"debian-openssl-1.1.x\"]\n  output        = \"./generated/prisma_client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel OwnedNFT {\n  id        Int      @id @default(autoincrement()) // Auto-incremented primary key\n  owner     String // NFT owner address\n  contract  String // NFT contract address\n  tokenId   Int // Token ID\n  updatedAt DateTime @updatedAt // Automatically updated timestamp\n\n  @@unique([contract, tokenId]) // Unique constraint per NFT\n  @@index([owner]) // Index for owner field\n}\n\nmodel PaintGrids {\n  gridId     Int      @id // Grid ID (0-1499)\n  nftAddress String // NFT contract address\n  tokenId    Int // Token ID used in this grid\n  metadata   String // Cached metadata (JSON string)\n  painter    String // Address of the user who painted\n  block      Int // Block number of the paint tx\n  txHash     String // Transaction hash for this paint\n  paintedAt  DateTime @default(now()) // Timestamp of painting (initial set)\n\n  @@unique([txHash]) // Ensure each txHash is unique (one paint per tx)\n  @@index([painter]) // Index for painter field\n}\n",
+  "inlineSchemaHash": "5640b5af2ac4febe381bdaafb3679d87c3236b8a65fe51d6402e5e15e64f2a34",
   "copyEngine": true
 }
 
@@ -213,6 +218,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "prisma/generated/prisma_client/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-1.1.x.so.node");
+path.join(process.cwd(), "prisma/generated/prisma_client/libquery_engine-debian-openssl-1.1.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/prisma_client/schema.prisma")

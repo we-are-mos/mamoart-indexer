@@ -66,7 +66,7 @@ PORT=selected_port
 bunx prisma generate
 ```
 
-5. **Push DB schema:**
+5. **Push DB schema (only needed if not deployed yet):**
 
 ```bash
 bunx prisma db push
@@ -80,6 +80,12 @@ To run all initial indexing + event watchers:
 
 ```bash
 bun run src/index.ts
+```
+
+Or if you're using the script from `package.json`, simply:
+
+```bash
+bun start
 ```
 
 Or run specific parts manually:
