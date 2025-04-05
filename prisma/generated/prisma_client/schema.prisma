@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+  output        = "./generated/prisma_client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model OwnedNFT {
+  id        Int      @id @default(autoincrement()) // Auto-incremented primary key
+  owner     String // NFT owner address
+  contract  String // NFT contract address
+  tokenId   Int // Token ID
+  updatedAt DateTime @updatedAt // Automatically updated timestamp
+
+  @@unique([contract, tokenId]) // Unique constraint per NFT
+  @@index([owner]) // Index for owner field
+}
+
+model PaintGrids {
+  gridId     Int      @id // Grid ID (0-1499)
+  nftAddress String // NFT contract address
+  tokenId    Int // Token ID used in this grid
+  metadata   String // Cached metadata (JSON string)
+  painter    String // Address of the user who painted
+  block      Int // Block number of the paint tx
+  txHash     String // Transaction hash for this paint
+  paintedAt  DateTime @default(now()) // Timestamp of painting (initial set)
+
+  @@unique([txHash]) // Ensure each txHash is unique (one paint per tx)
+  @@index([painter]) // Index for painter field
+}
